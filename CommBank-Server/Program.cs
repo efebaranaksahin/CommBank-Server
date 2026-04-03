@@ -7,14 +7,15 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Ayarları Okuyoruz
+// 1. Ayarları Okuyoruz (appsettings.json içinden alır)
 var connectionString = builder.Configuration.GetValue<string>("MongoDB:ConnectionString");
 var databaseName = builder.Configuration.GetValue<string>("MongoDB:DatabaseName") ?? "CommBankDB";
 
-// 2. Bağlantı Kontrolü (Fallback)
+// 2. Bağlantı Kontrolü (Fallback) - Şifreyi sildik, güvenli hale getirdik.
 if (string.IsNullOrWhiteSpace(connectionString) || connectionString.Contains("{CONNECTION_STRING}"))
 {
-    connectionString = "mongodb+srv://branaksahin_db_user:yaZ2tyXzVKYmlsTm@cluster0.wcvmqio.mongodb.net/?appName=Cluster0";
+    // Buraya şifre yazmıyoruz, appsettings dosyasından gelmesini bekliyoruz.
+    connectionString = "YOUR_FALLBACK_CONNECTION_STRING_HERE";
 }
 
 var mongoClient = new MongoClient(connectionString);
